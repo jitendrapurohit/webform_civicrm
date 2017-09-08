@@ -75,6 +75,8 @@ class wf_crm_webform_postprocess extends wf_crm_webform_base {
     $this->crmValues = wf_crm_enabled_fields($this->node, $this->rawValues);
     // Even though this object is destroyed between page submissions, this trick allows us to persist some data - see below
     $this->ent = wf_crm_aval($form_state, 'civicrm:ent', array());
+    //Is preview enabled in webform settings?
+    $this->isPreviewEnabled = wf_crm_aval($this->form_state, 'webform:preview');
 
     $this->hiddenFieldValidation();
     $this->validateThisPage($this->form['submitted']);
@@ -90,9 +92,11 @@ class wf_crm_webform_postprocess extends wf_crm_webform_base {
       $this->addPaymentJs();
       $this->loadMultiPageData();
       if ($this->tallyLineItems()) {
-        if ($this->isLivePaymentProcessor() && $this->isPaymentPage() && !form_get_errors()) {
-          if ($this->validateBillingFields()) {
-            if ($this->createBillingContact()) {
+        //Determine if we are in Preview or Submit Page.
+        $action = wf_crm_aval($this->form_state, 'clicked_button:#value', 'Submit');
+        if ($this->isLivePaymentProcessor() && $this->isPaymentPage($action) && !form_get_errors()) {
+          if ($this->validateBillingFields($action)) {
+            if ($action == 'Submit' && $this->createBillingContact()) {
               $this->submitLivePayment();
             }
           }
@@ -1525,11 +1529,18 @@ class wf_crm_webform_postprocess extends wf_crm_webform_base {
 
   /**
    * Are billing fields exposed to this webform page?
+   * @param array $action
+   *   'Submit' or 'Preview'
    * @return bool
    */
-  private function isPaymentPage() {
+  private function isPaymentPage($action) {
     $page = wf_crm_aval($this->form_state, 'storage:page_num', 1);
     $field = $this->getComponent('civicrm_1_contribution_1_contribution_contribution_page_id');
+    //Increment contribution page val if preview is enabled on the webform and
+    //we are on submit page so that payment gets triggered.
+    if ($this->isPreviewEnabled && $action == 'Submit') {
+      $field['page_num'] += 1;
+    }
     return $page == $field['page_num'];
   }
 
@@ -1551,11 +1562,18 @@ class wf_crm_webform_postprocess extends wf_crm_webform_base {
 
   /**
    * Normalize and validate billing input
+   * @param array $action
+   *   'Submit' or 'Preview'
    * @return bool
    */
-  private function validateBillingFields() {
+  private function validateBillingFields($action) {
     $valid = TRUE;
     $params = $card_errors = array();
+    //Do not validate as it is already done during Preview action.
+    if ($this->isPreviewEnabled && $action == 'Submit' && !empty(variable_get('billing_params'))) {
+      $this->billing_params = variable_get('billing_params');
+      return $valid;
+    }
     // These are hard-coded in CiviCRM so we may as well hard-code them here
     // Value = translated label to be shown during validation or FALSE if not required
     $billing_fields = array(
@@ -1642,6 +1660,9 @@ class wf_crm_webform_postprocess extends wf_crm_webform_base {
     }
     if ($valid) {
       $this->billing_params = $params;
+      if ($action == 'Preview') {
+        variable_set('billing_params', $this->billing_params);
+      }
     }
     // Since billing fields are not "real" form fields they get cleared if the page reloads.
     // We add a bit of js to fix this annoyance.
