@@ -138,7 +138,7 @@ final class ContactRelationshipTest extends WebformCivicrmTestBase {
     $this->assertEquals('Student of', $relationshipType['label_b_a']);
 
     $this->drupalLogin($this->adminUser);
-    //Edit contact element and enable select widget.
+    // Edit Contact Element and enable select widget.
     $this->drupalGet($this->webform->toUrl('edit-form'));
 
     $contactElementEdit = $this->assertSession()->elementExists('css', '[data-drupal-selector="edit-webform-ui-elements-civicrm-2-contact-1-contact-existing-operations"] a.webform-ajax-link');
