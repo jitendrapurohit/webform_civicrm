@@ -45,7 +45,7 @@ final class ContactRelationshipTestAdd extends WebformCivicrmTestBase {
     $this->createContactSubtype();
     $this->createRelationshipType();
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
     'webform' => $this->webform->id(),
     ]));

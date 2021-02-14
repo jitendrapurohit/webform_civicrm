@@ -45,7 +45,7 @@ final class ContactRelationshipTest extends WebformCivicrmTestBase {
     $this->createContactSubtype();
     $this->createRelationshipType();
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
       'webform' => $this->webform->id(),
     ]));
@@ -137,7 +137,7 @@ final class ContactRelationshipTest extends WebformCivicrmTestBase {
 
     $this->assertEquals('Student of', $relationshipType['label_b_a']);
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     // Edit Contact Element and enable select widget.
     $this->drupalGet($this->webform->toUrl('edit-form'));
 

@@ -75,7 +75,7 @@ final class ContributionIatsTest extends WebformCivicrmTestBase {
 
     $financialAccount = $this->setupSalesTax(2, $accountParams = []);
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
       'webform' => $this->webform->id(),
     ]));

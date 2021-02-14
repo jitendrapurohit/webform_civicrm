@@ -28,7 +28,7 @@ final class GroupsTagsSubmissionTest extends WebformCivicrmTestBase {
 
     $this->addcontactinfo();
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
       'webform' => $this->webform->id(),
     ]));

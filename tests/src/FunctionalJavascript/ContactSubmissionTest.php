@@ -49,7 +49,7 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
     //create sample contacts.
     $this->createGroupWithContacts();
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
       'webform' => $this->webform->id(),
     ]));
@@ -127,7 +127,7 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
     ];
     $contact = $utils->wf_civicrm_api('contact', 'create', $params);
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
       'webform' => $this->webform->id(),
     ]));
@@ -174,7 +174,7 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
     $this->assertArrayHasKey('first_name', $contact_values['contact'], 'Test contact data must contain first_name');
     $this->assertArrayHasKey('last_name', $contact_values['contact'], 'Test contact data must contain last_name');
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
       'webform' => $this->webform->id(),
     ]));

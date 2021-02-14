@@ -31,7 +31,7 @@ final class MembershipSubmissionTest extends WebformCivicrmTestBase {
     $this->createMembershipType(1, TRUE);
     $payment_processor = $this->createPaymentProcessor();
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
       'webform' => $this->webform->id(),
     ]));
@@ -121,7 +121,7 @@ final class MembershipSubmissionTest extends WebformCivicrmTestBase {
   public function testSubmitWebform() {
     $this->createMembershipType();
 
-    $this->drupalLogin($this->adminUser);
+    $this->drupalLogin($this->rootUser);
     $this->drupalGet(Url::fromRoute('entity.webform.civicrm', [
       'webform' => $this->webform->id(),
     ]));

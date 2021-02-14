@@ -40,27 +40,10 @@ abstract class WebformCivicrmTestBase extends CiviCrmTestBase {
   protected $webform;
 
   /**
-   * The test admin user.
-   *
-   * @var \Drupal\user\Entity\User
-   */
-  protected $adminUser;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();
-    $this->adminUser = $this->createUser([
-      'access content',
-      'administer CiviCRM',
-      'access CiviCRM',
-      'access administration pages',
-      'access webform overview',
-      'administer webform',
-      'edit all contacts',
-      'view all activities',
-    ]);
     $this->webform = $this->createWebform([
       'id' => 'civicrm_webform_test',
       'title' => 'CiviCRM Webform Test',
