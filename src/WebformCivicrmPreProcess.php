@@ -804,7 +804,7 @@ class WebformCivicrmPreProcess extends WebformCivicrmBase implements WebformCivi
           // Load file attachments
           if (!empty($this->all_sets["{$type}upload"])) {
             foreach ($this->getAttachments($type, $id) as $f => $file) {
-              $this->info[$type][$n]["{$type}upload"][1]["file_$f"] = $file['file_id'];
+              $this->info[$type][$n]["{$type}upload"][1]["file_$f"] = $file['id'];
             }
           }
           // Load tags

@@ -809,19 +809,21 @@ abstract class WebformCivicrmBase {
   }
 
   /**
-   * FIXME: Use the api for this
    * @param string $ent - entity type
    * @param int $id - entity id
    * @return array starting at index 1
    */
   public function getAttachments($ent, $id) {
-    $n = 1;
-    $attachments = [];
-    $dao = \CRM_Core_DAO::executeQuery("SELECT * FROM civicrm_entity_file WHERE entity_table = 'civicrm_$ent' AND entity_id = $id");
-    while ($dao->fetch()) {
-      $attachments[$n++] = ['id' => $dao->id, 'file_id' => $dao->file_id];
+    $utils = \Drupal::service('webform_civicrm.utils');
+    $attachment = $utils->wf_crm_apivalues('Attachment', 'get', [
+      'sequential' => 1,
+      'entity_table' => "civicrm_{$ent}",
+      'entity_id' => $id,
+    ]);
+    if (count($attachment) > 0) {
+      return array_combine(range(1, count($attachment)), $attachment);
     }
-    return $attachments;
+    return [];
   }
 
   /**

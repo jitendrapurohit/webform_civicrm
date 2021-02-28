@@ -2302,7 +2302,7 @@ class WebformCivicrmPostProcess extends WebformCivicrmBase implements WebformCiv
         list(, $i) = explode('_', $num);
         $dao = new \CRM_Core_DAO_EntityFile();
         if (!empty($attachments[$i])) {
-          $dao->id = $attachments[$i]['id'];
+          $dao->id = $attachments[$i]['entity_file_id'];
         }
         $dao->file_id = $file_id;
         $dao->entity_id = $id;
