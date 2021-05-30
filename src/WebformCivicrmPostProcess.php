@@ -2388,7 +2388,7 @@ class WebformCivicrmPostProcess extends WebformCivicrmBase implements WebformCiv
             $this->data[$ent][$c][$tableName][$key][$fld] = $this->ent['contact'][$val]['id'];
           }
           elseif (substr($name, 0, 6) == 'custom') {
-            $this->data[$ent][$c]['update_contact_ref'][] = $name;
+            $this->data[$ent][$c]['update_contact_ref'][$n][$name] = $val;
           }
         }
       }
@@ -2780,20 +2780,25 @@ class WebformCivicrmPostProcess extends WebformCivicrmBase implements WebformCiv
       'id' => $cid,
     ];
     $skipKeys = [];
-    foreach ($params['update_contact_ref'] as $refKey) {
-      foreach ($params['contact'] as $contactParams) {
-        foreach ($contactParams as $key => $value) {
-          if (strpos($key, "{$refKey}_") === 0 && !isset($updateParams[$key]) && !in_array($key, $skipKeys)) {
-            //If this is an edit to an existing record, remove any matching keys that was previously set to 'create' new records.
-            if (strpos($key, "{$refKey}_-") !== 0) {
-              foreach ($updateParams as $k => $v) {
-                if (strpos($k, "{$refKey}_-") === 0) {
-                  $skipKeys[] = $k;
-                  unset($updateParams[$k]);
+    foreach ($params['update_contact_ref'] as $n => $refKeys) {
+      foreach ($refKeys as $refKey => $val) {
+        if (empty($this->ent['contact'][$val]['id'])) {
+          continue;
+        }
+        foreach ($params['contact'] as $contactParams) {
+          foreach ($contactParams as $key => $value) {
+            if (strpos($key, "{$refKey}_") === 0 && !isset($updateParams[$key]) && !in_array($key, $skipKeys)) {
+              //If this is an edit to an existing record, remove any matching keys that was previously set to 'create' new records.
+              if (strpos($key, "{$refKey}_-") !== 0) {
+                foreach ($updateParams as $k => $v) {
+                  if (strpos($k, "{$refKey}_-") === 0) {
+                    $skipKeys[] = $k;
+                    unset($updateParams[$k]);
+                  }
                 }
               }
+              $updateParams[$key] = $value;
             }
-            $updateParams[$key] = $value;
           }
         }
       }
