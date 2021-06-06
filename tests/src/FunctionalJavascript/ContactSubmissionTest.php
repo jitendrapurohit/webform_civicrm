@@ -107,8 +107,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
     }
     $this->getSession()->getPage()->selectFieldOption('Existing Contact', $this->contacts[1]['id']);
     $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->getSession()->getPage()->fillField('First Name', 'Frederick');
-    $this->getSession()->getPage()->fillField('Last Name', 'Pabst');
+    $this->getSession()->getPage()->fillField('First Name', 'Homer');
+    $this->getSession()->getPage()->fillField('Last Name', 'Simpson');
     $this->getSession()->getPage()->pressButton('Submit');
     $this->assertSession()->pageTextContains('New submission added to CiviCRM Webform Test.');
 
@@ -120,8 +120,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
     $result_debug = var_export($contact_result, TRUE);
 
     $this->assertEquals(1, $contact_result['count'], $result_debug);
-    $this->assertEquals('Frederick', $contact_result['values'][0]['first_name'], $result_debug);
-    $this->assertEquals('Pabst', $contact_result['values'][0]['last_name'], $result_debug);
+    $this->assertEquals('Homer', $contact_result['values'][0]['first_name'], $result_debug);
+    $this->assertEquals('Simpson', $contact_result['values'][0]['last_name'], $result_debug);
   }
 
   /**
@@ -151,8 +151,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
     $this->assertSession()->fieldValueEquals('Last Name', $contact['last_name']);
 
     //Update the name to some other value.
-    $this->getSession()->getPage()->fillField('First Name', 'Frederick');
-    $this->getSession()->getPage()->fillField('Last Name', 'Pabst');
+    $this->getSession()->getPage()->fillField('First Name', 'Homer');
+    $this->getSession()->getPage()->fillField('Last Name', 'Simpson');
     $this->getSession()->getPage()->pressButton('Submit');
     $this->assertSession()->pageTextContains('New submission added to CiviCRM Webform Test.');
 
@@ -165,8 +165,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
 
     $this->assertArrayHasKey('count', $contact_result, $result_debug);
     $this->assertEquals(1, $contact_result['count'], $result_debug);
-    $this->assertEquals('Frederick', $contact_result['values'][0]['first_name'], $result_debug);
-    $this->assertEquals('Pabst', $contact_result['values'][0]['last_name'], $result_debug);
+    $this->assertEquals('Homer', $contact_result['values'][0]['first_name'], $result_debug);
+    $this->assertEquals('Simpson', $contact_result['values'][0]['last_name'], $result_debug);
 
     //Enable Autocomplete on the contact Element.
     $this->drupalGet($this->webform->toUrl('edit-form'));
@@ -218,8 +218,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
     $this->assertSession()->fieldValueEquals('Last Name', $contact_result['values'][0]['last_name']);
 
     //Update the name to some other value.
-    $this->getSession()->getPage()->fillField('First Name', 'Frederick-Edited');
-    $this->getSession()->getPage()->fillField('Last Name', 'Pabst-Edited');
+    $this->getSession()->getPage()->fillField('First Name', 'Homer-Edited');
+    $this->getSession()->getPage()->fillField('Last Name', 'Simpson-Edited');
     $this->getSession()->getPage()->pressButton('Submit');
     $this->assertSession()->pageTextContains('New submission added to CiviCRM Webform Test.');
 
@@ -232,8 +232,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
 
     $this->assertArrayHasKey('count', $contact_result2, $result_debug);
     $this->assertEquals(1, $contact_result2['count'], $result_debug);
-    $this->assertEquals('Frederick-Edited', $contact_result2['values'][0]['first_name'], $result_debug);
-    $this->assertEquals('Pabst-Edited', $contact_result2['values'][0]['last_name'], $result_debug);
+    $this->assertEquals('Homer-Edited', $contact_result2['values'][0]['first_name'], $result_debug);
+    $this->assertEquals('Simpson-Edited', $contact_result2['values'][0]['last_name'], $result_debug);
   }
 
   /**
@@ -450,16 +450,16 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
       'Individual',
       [
         'contact' => [
-          'first_name' => 'Frederick',
-          'last_name' => 'Pabst',
+          'first_name' => 'Homer',
+          'last_name' => 'Simpson',
         ]
     ]];
     yield [
       'Individual',
       [
         'contact' => [
-          'first_name' => 'Frederick',
-          'last_name' => 'Pabst',
+          'first_name' => 'Homer',
+          'last_name' => 'Simpson',
         ],
         'email' => [
           [
@@ -481,8 +481,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
       'Individual',
       [
         'contact' => [
-          'first_name' => 'Frederick',
-          'last_name' => 'Pabst',
+          'first_name' => 'Homer',
+          'last_name' => 'Simpson',
         ],
         'website' => [
           [
@@ -494,8 +494,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
       'Individual',
       [
         'contact' => [
-          'first_name' => 'Frederick',
-          'last_name' => 'Pabst',
+          'first_name' => 'Homer',
+          'last_name' => 'Simpson',
         ],
         'phone' => [
           [
@@ -507,8 +507,8 @@ final class ContactSubmissionTest extends WebformCivicrmTestBase {
       'Individual',
       [
         'contact' => [
-          'first_name' => 'Frederick',
-          'last_name' => 'Pabst',
+          'first_name' => 'Homer',
+          'last_name' => 'Simpson',
         ],
         'email' => [
           [
