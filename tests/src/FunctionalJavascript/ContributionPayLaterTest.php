@@ -39,8 +39,8 @@ final class ContributionPayLaterTest extends WebformCivicrmTestBase {
     $this->assertPageNoErrorMessages();
 
     $this->assertSession()->waitForField('First Name');
-    $this->getSession()->getPage()->fillField('First Name', 'Frederick');
-    $this->getSession()->getPage()->fillField('Last Name', 'Pabst');
+    $this->getSession()->getPage()->fillField('First Name', 'FrederickPay');
+    $this->getSession()->getPage()->fillField('Last Name', 'PabstPay');
     $this->getSession()->getPage()->fillField('Email', 'fred@example.com');
 
     $this->getSession()->getPage()->pressButton('Next >');
@@ -52,10 +52,20 @@ final class ContributionPayLaterTest extends WebformCivicrmTestBase {
     $this->getSession()->getPage()->pressButton('Submit');
     $this->assertPageNoErrorMessages();
     $this->assertSession()->pageTextContains('New submission added to CiviCRM Webform Test.');
-
-    $api_result = \Drupal::service('webform_civicrm.utils')->wf_civicrm_api('membership', 'get', [
+    $contact = $this->utils->wf_civicrm_api('contact', 'get', [
       'sequential' => 1,
+      'first_name' => 'FrederickPay',
+      'last_name' => 'PabstPay',
     ]);
+    print_r('...contact...');
+    print_r($contact);
+    $api_result = $this->utils->wf_civicrm_api('membership', 'get', [
+      'sequential' => 1,
+      'contact_id' => $contact['id'],
+    ]);
+    print_r('...api_result...');
+    print_r($api_result);
+
     $this->assertEquals(1, $api_result['count']);
     $membership = reset($api_result['values']);
 
