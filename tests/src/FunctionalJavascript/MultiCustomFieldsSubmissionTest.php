@@ -439,9 +439,9 @@ final class MultiCustomFieldsSubmissionTest extends WebformCivicrmTestBase {
       $this->assertEquals($dataValues[1], 100);
       $this->assertEquals($dataValues[2], 200);
       $this->assertEquals($dataValues[3], 200);
-      print_r($dataValues);
       $this->assertEmpty($dataValues[4]);
       $this->assertEmpty($dataValues[5]);
+      print_r($contactRefValues);
 
       unset($contactRefValues['entity_id'], $contactRefValues['latest'], $contactRefValues['id']);
       //Ensure 5 custom field value is created, with only 3 having the values.
