@@ -57,14 +57,10 @@ final class ContributionPayLaterTest extends WebformCivicrmTestBase {
       'first_name' => 'FrederickPay',
       'last_name' => 'PabstPay',
     ]);
-    print_r('...contact...');
-    print_r($contact);
     $api_result = $this->utils->wf_civicrm_api('membership', 'get', [
       'sequential' => 1,
       'contact_id' => $contact['id'],
     ]);
-    print_r('...api_result...');
-    print_r($api_result);
 
     $this->assertEquals(1, $api_result['count']);
     $membership = reset($api_result['values']);
