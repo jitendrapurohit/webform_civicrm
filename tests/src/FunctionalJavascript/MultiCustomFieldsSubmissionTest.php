@@ -439,6 +439,7 @@ final class MultiCustomFieldsSubmissionTest extends WebformCivicrmTestBase {
       $this->assertEquals($dataValues[1], 100);
       $this->assertEquals($dataValues[2], 200);
       $this->assertEquals($dataValues[3], 200);
+      print_r($dataValues);
       $this->assertEmpty($dataValues[4]);
       $this->assertEmpty($dataValues[5]);
 

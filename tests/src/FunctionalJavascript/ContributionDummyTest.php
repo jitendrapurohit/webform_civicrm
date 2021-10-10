@@ -160,6 +160,7 @@ final class ContributionDummyTest extends WebformCivicrmTestBase {
     $membership = $this->utils->wf_civicrm_api('membership', 'get', [
       'sequential' => 1,
     ])['values'];
+    print_r($membership);
     $adminCid = $this->getUFMatchRecord($this->adminUser->id())['contact_id'];
     $this->assertEquals($adminCid, $membership[0]['contact_id']);
     $this->assertEquals('Basic', $membership[0]['membership_name']);
