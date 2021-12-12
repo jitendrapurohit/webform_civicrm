@@ -610,7 +610,9 @@ abstract class WebformCivicrmTestBase extends CiviCrmTestBase {
 
     $this->getSession()->getPage()->selectFieldOption('edit-settings-body', '_other_');
     $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->wait(5000);
     $this->fillCKEditor('settings[body_custom_html][value]', $params['body']);
+    $this->createScreenshot($this->htmlOutputDirectory . '/email_handler.png');
     $this->getSession()->getPage()->pressButton('Save');
     $this->assertSession()->assertWaitOnAjaxRequest();
   }
