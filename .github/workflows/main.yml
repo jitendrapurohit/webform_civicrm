@@ -87,7 +87,7 @@ jobs:
       - name: Install token
         run: |
           cd ~/drupal
-          COMPOSER_MEMORY_LIMIT=-1 composer require drupal/token:^1.9
+          COMPOSER_MEMORY_LIMIT=-1 composer require drupal/token:^1.10
       - uses: nanasess/setup-chromedriver@master
       - name: Run chromedriver
         run: chromedriver &

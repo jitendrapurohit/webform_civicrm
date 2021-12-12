@@ -241,6 +241,7 @@ final class ExistingContactElementTest extends WebformCivicrmTestBase {
       'absolute' => TRUE,
       'query' => ['reset' => 1, 'cid' => $this->rootUserCid]
     ])->toString();
+    print_r($sent_email);
     // Check if email was sent to contact 1.
     $this->assertStringContainsString('frederick@pabst.io', $sent_email[0]['to']);
 
