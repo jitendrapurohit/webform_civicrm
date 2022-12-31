@@ -428,7 +428,7 @@ class Utils implements UtilsInterface {
       $rules = array_fill_keys(['Individual', 'Organization', 'Household'], []);
       $values = $this->wf_crm_apivalues('RuleGroup', 'get');
       foreach ($values as $value) {
-        $rules[$value['contact_type']][$value['id']] = $value['title'];
+        $rules[$value['contact_type']][$value['id']] = $value['title'] ?? '';
       }
     }
     return $rules[$contact_type];
