@@ -581,7 +581,7 @@ class wf_crm_webform_postprocess extends wf_crm_webform_base {
     if ($rule) {
       $contact['contact'][1]['contact_type'] = ucfirst($contact['contact'][1]['contact_type']);
       $params = [
-        'check_permission' => FALSE,
+        'check_permissions' => FALSE,
         'sequential' => TRUE,
         'rule_type' => is_numeric($rule) ? NULL : $rule,
         'dedupe_rule_id' => is_numeric($rule) ? $rule : NULL,
